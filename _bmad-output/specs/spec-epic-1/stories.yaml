@@ -1,0 +1,20 @@
+- id: "1"
+  title: Decision schema validation
+  description: >-
+    Implement CAP-1's four-field decision contract, including allowed values,
+    the category-to-route mapping, and clear errors for missing, invalid, or
+    extra properties. Require a rationale string whose one-sentence form is a
+    content requirement, without mechanical sentence counting.
+  spec_checkpoint: false
+  done_checkpoint: false
+  invoke_dev_with: ""
+- id: "2"
+  title: Idempotent seed loader
+  description: >-
+    Implement CAP-2's `uv run python load_seed.py` command to load the
+    read-only ticket and customer CSVs into the local SQLite `app.db` with the
+    exact source columns. Make repeated runs produce the same database and
+    preserve the table and column names used by `mcp/triage_server.py`.
+  spec_checkpoint: false
+  done_checkpoint: false
+  invoke_dev_with: ""
