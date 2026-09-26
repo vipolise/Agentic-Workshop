@@ -26,7 +26,10 @@ class TriageDecision(BaseModel):
     category: Category = Field(description="The ticket's category from the triage policy.")
     priority: Priority = Field(description="P1 is most urgent; P4 is least urgent.")
     route: Route = Field(description="The team that handles this category.")
-    rationale: str = Field(description="A rationale naming the policy rule that was applied.")
+    rationale: str = Field(
+        strict=True,
+        description="A rationale naming the policy rule that was applied.",
+    )
 
     @field_validator("route")
     @classmethod
@@ -59,7 +62,7 @@ def validate_decision(payload: str | bytes | dict) -> TriageDecision:
     if isinstance(payload, (str, bytes)):
         try:
             payload = json.loads(payload, object_pairs_hook=_object_without_duplicate_keys)
-        except (json.JSONDecodeError, UnicodeDecodeError, _DuplicateJSONKeyError, RecursionError) as error:
+        except (ValueError, UnicodeDecodeError, RecursionError) as error:
             raise TriageValidationError(f"Decision is not valid JSON: {error}") from error
 
     if not isinstance(payload, dict):
